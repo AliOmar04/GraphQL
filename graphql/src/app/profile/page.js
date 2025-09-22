@@ -7,6 +7,7 @@ import { renderAuditPie } from "@/lib/hooks/auditRatio";
 import { RecentAudits } from "@/lib/hooks/recentAudits";
 import { RecentProjects } from "@/lib/hooks/recentProjects";
 import { renderXPChart } from "@/lib/hooks/xpChart";
+import Link from "next/link";
 
 export default function ProfilePage() {
   const { user, loading, error } = useUser();
