@@ -32,6 +32,15 @@ main { min-height: 100vh; }
   text-transform: uppercase;
 }
 
+
+
+.auth-page{
+  /* already grid */
+  justify-content: center;  /* center the grid track */
+  align-content: center;    /* center vertically within the viewport */
+}
+
+
 /* ========== Login page (from /app/page.js) ========== */
 .login-card{
   width:min(440px,92vw);
