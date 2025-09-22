@@ -20,7 +20,7 @@ export default function ProfilePage() {
 
   if (loading) return <main className="auth-page"><p className="loading">Loading profile…</p></main>;
   if (error)   return <main className="auth-page"><p className="error-msg">Couldn’t load profile. Try again.</p></main>;
-  if (!user)   return <main className="auth-page"><p>You are not logged in. <a href="/">Log in</a></p></main>;
+  if (!user)   return <main className="auth-page"><p>You are not logged in. <Link href="/">Log in</Link></p></main>;
 
   return (
     <main className="auth-page">

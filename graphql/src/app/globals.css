@@ -376,3 +376,9 @@ main { min-height: 100vh; }
 }
 @keyframes scanlines { to { transform: translateY(10px); } } /*  */
 
+body {
+  font-family: var(--font-rajdhani), sans-serif;
+}
+h1, h2, h3 {
+  font-family: var(--font-orbitron), sans-serif;
+}
