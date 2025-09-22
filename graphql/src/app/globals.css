@@ -1,0 +1,378 @@
+@import "tailwindcss";
+
+/* ========== Base ========== */
+html, body { height: 100%; margin: 0; padding: 0; }
+body { background: #000000; color: #e7e9ee; font-family: Arial, Helvetica, sans-serif; }
+main { min-height: 100vh; }
+
+/* Full-viewport background used by both pages */
+.auth-page{
+  min-height: 100svh;
+  display:grid;
+  place-items:center;
+  padding:24px;
+
+}
+
+.auth-wrap{
+  display:grid;
+  justify-items:center;   /* center horizontally */
+  row-gap:12px;           /* tight spacing between H1 and card */
+}
+
+.section-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 3rem;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 20px;
+  background: linear-gradient(45deg, #FF5E00, #00B2FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+}
+
+/* ========== Login page (from /app/page.js) ========== */
+.login-card{
+  width:min(440px,92vw);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,94,0,0.20);
+  border-radius: 14px;
+  padding: 26px 22px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 30px rgba(255,94,0,.15);
+}
+.login-title{   
+  width:min(440px,92vw);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,94,0,0.20);
+  border-radius: 14px;
+  padding: 26px 22px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 30px rgba(255,94,0,.15); }
+.login-form{ display:grid; gap:14px; }
+.login-label{ color:#FF5E00; text-transform:uppercase; font: 600 .8rem 'Rajdhani', sans-serif; letter-spacing:.08em; }
+.login-input{
+  width:100%;
+  padding:14px;
+  font: 600 1rem 'Rajdhani', sans-serif;
+  color:white;
+  background: rgba(255,255,255,.05);
+  border:1px solid rgba(255,94,0,.30);
+  border-radius:10px;
+  transition: box-shadow .2s ease, border-color .2s ease, background .2s ease;
+}
+.login-input::placeholder{ color:#9aa3af; }
+.login-input:focus{   
+  outline:none;
+  border-color:#FF5E00;
+  box-shadow: 0 0 20px rgba(255,94,0,.30);
+  background: rgba(255,255,255,.08); }
+.password-wrap{ position:relative;}
+.toggle-pw{
+  position:absolute; right:10px; top:50%; transform:translateY(-50%);
+  background:transparent; border:0; cursor:pointer; color:#c8cdd8; font: 600 .9rem 'Rajdhani', sans-serif;
+}
+.toggle-pw:hover{ color:#c9d1d9; }
+
+/* Error + loading */
+.error-msg{
+  display:flex; align-items:center; gap:10px;
+  padding:10px 12px; margin-top:8px;
+  color:#ffecec;                          /* readable on dark */
+  background: linear-gradient(180deg, rgba(255,44,44,.16), rgba(255,44,44,.08));
+  border:1px solid rgba(255,44,44,.55);
+  border-radius:10px;
+  text-shadow: 0 0 8px rgba(255,44,44,.25);
+  box-shadow:
+    0 0 24px rgba(255,44,44,.22),
+    inset 0 0 12px rgba(255,44,44,.10);
+}
+
+.error-msg::before{
+  content:"";
+  width:8px; height:8px; border-radius:50%;
+  background: radial-gradient(circle at 30% 30%, #ff0000 0, #ff2c2c 35%, #b30000 100%);
+  box-shadow: 0 0 12px rgba(255,44,44,.7);
+}
+
+.loading{ color:#cfd6e3; }
+
+.login-btn{
+  width:100%; padding:14px; border:0; border-radius:10px; cursor:pointer;
+  font: 900 1rem 'Orbitron', sans-serif; letter-spacing:.08em; text-transform:uppercase;
+  background: linear-gradient(45deg, #FF5E00, #00B2FF); color:white;
+  transition: transform .1s ease, box-shadow .2s ease, filter .2s ease;
+}
+.login-btn:hover{ transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,94,0,.45); } /*  */
+.login-btn:disabled{ filter:saturate(.5) brightness(.8); cursor:not-allowed; }
+
+/* Minimal floating particles */
+#particles, .particle { position: fixed; pointer-events:none; z-index:1; }
+.particle::before{
+  content:''; position:absolute; width:2px; height:2px; background:#FF5E00;
+  box-shadow:0 0 10px #FF5E00, 0 0 20px #FF5E00;
+  animation: float-up 15s linear infinite;
+}
+@keyframes float-up{
+  0%{ transform: translateY(100vh) rotate(0); opacity:0 }
+  10%,90%{ opacity:1 }
+  100%{ transform: translateY(-100vh) rotate(720deg); opacity:0 }
+}
+
+/* ===== Floating shapes (fixed, behind content) ===== */
+.shapes-container{
+  position: fixed; inset: 0; pointer-events: none; z-index: 0; /* sits above your grid-bg, below UI */
+}
+
+.shape{ position: absolute; opacity: .10; }
+
+/* circle outline */
+.shape-circle{
+  width: 300px; height: 300px; border: 2px solid #FF5E00; border-radius: 50%;
+  top: 10%; left: 10%;
+  animation: float-rotate 20s ease-in-out infinite;
+}
+
+/* triangle (CSS borders trick) */
+.shape-triangle{
+  width: 0; height: 0;
+  border-left: 100px solid transparent;
+  border-right: 100px solid transparent;
+  border-bottom: 173px solid rgba(0,178,255,.20);
+  top: 60%; right: 15%;
+  animation: float-rotate 25s ease-in-out infinite reverse;
+}
+
+/* tilted square outline */
+.shape-square{
+  width: 150px; height: 150px; border: 2px solid #00B2FF; transform: rotate(45deg);
+  bottom: 20%; left: 20%;
+  animation: float-rotate 22s ease-in-out infinite;
+}
+
+/* gentle bob + rotation */
+@keyframes float-rotate{
+  0%,100%{ transform: translateY(0) rotate(0deg) scale(1); }
+  25%{    transform: translateY(-30px) rotate(90deg)  scale(1.1); }
+  50%{    transform: translateY(20px)  rotate(180deg) scale(0.9); }
+  75%{    transform: translateY(-10px) rotate(270deg) scale(1.05); }
+}
+
+/* ===== Rotating framed squares (the “about” spinner) ===== */
+.spin-frames{
+  position: relative; width: 260px; height: 260px; margin-inline: auto;
+  animation: float 6s ease-in-out infinite; /* subtle bob */
+}
+.spin-frames::before,
+.spin-frames::after{
+  content:""; position: absolute; inset: 0; border-radius: 12px;
+  border: 2px solid #FF5E00; box-shadow: 0 0 30px rgba(255,94,0,.5);
+}
+.spin-frames::before{ animation: rotateFrame 20s linear infinite; }
+.spin-frames::after{
+  inset: 10%; border-color: #00B2FF;
+  box-shadow: 0 0 30px rgba(0,178,255,.5);
+  animation: rotateFrame 15s linear infinite reverse;
+}
+
+@keyframes rotateFrame { to { transform: rotate(360deg); } }
+@keyframes float {
+  0%,100%{ transform: translateY(0); box-shadow: 0 0 30px rgba(255,94,0,.5); }
+  50%{    transform: translateY(-10px); box-shadow: 0 10px 40px rgba(255,94,0,.7); }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce){
+  .shape-circle, .shape-triangle, .shape-square, .spin-frames::before, .spin-frames::after{
+    animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+  }
+}
+
+/* ========== Profile dashboard (from /app/profile/page.js) ========== */
+.dash-header{
+  width:min(1200px,96vw); margin:8px auto 16px;
+  display:flex; justify-content:space-between; align-items:center; gap:12px; padding:6px 2px;
+}
+.title{ font-size:1.35rem; font-weight:800; letter-spacing:.2px; margin:0; }
+.subtitle{ margin:2px 0 0; color:#9aa3af; font-size:.95rem; }
+
+.logout-btn{
+  border:1px solid #2b2f36; background:#101114; color:#d6dae2;
+  border-radius:10px; padding:8px 12px; cursor:pointer;
+  transition:filter 120ms ease, transform 80ms ease;
+}
+.logout-btn:hover{ filter:brightness(1.1); }
+.logout-btn:active{ transform:translateY(1px); }
+
+/* Grid with 1 col on phones, 3 cols on wide screens; your “Top 10 projects” can span 2 */
+.dashboard-grid{
+  width:min(1200px,96vw); margin:0 auto 32px;
+  display:grid; gap:14px; grid-template-columns:1fr; grid-auto-rows:auto;
+}
+@media (min-width:760px){ .dashboard-grid{ grid-template-columns:repeat(2,1fr); } }
+@media (min-width:1100px){ .dashboard-grid{ grid-template-columns:repeat(3,1fr); } }
+.span-2{ grid-column:auto; }            /* default single column */
+@media (min-width:760px){ .span-2{ grid-column:span 2; } }
+
+/* Panel card */
+.panel{
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,94,0,0.2);
+  border-radius: 10px;
+  padding: 24px;                    /* use 40px if you want chunkier spacing */
+  backdrop-filter: blur(10px);
+  transition: box-shadow .2s ease, border-color .2s ease, transform .1s ease;
+}
+.panel:hover{
+  border-color: rgba(255,94,0,0.35);
+  box-shadow: 0 0 20px rgba(255,94,0,0.15);
+  transform: translateY(-1px);
+}
+.panel-title{   
+  font-family: 'Orbitron', monospace;
+  font-size: 1.1rem;
+  margin: 0 0 12px;
+  background: linear-gradient(45deg, #ffffff, #FF5E00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; }
+.panel-body{
+  border: 0;
+  border-radius: 10px;
+  padding: 18px;
+  min-height: 140px;           /* keep your minimum height */
+  background: transparent;
+}
+.muted{ color:#8b93a1; }
+/* Mobile: slightly tighter padding */
+@media (max-width: 520px){
+  .panel{ padding: 16px; }
+  .panel-body{ padding: 14px; }
+}
+/* Detail grid inside “User information” */
+.info-twocol{ display:grid; gap:12px; width:100%; }
+.info-twocol .row{
+  display:grid; grid-template-columns:auto 1fr auto 1fr;
+  align-items:center; gap:8px 14px;
+}
+.info-twocol .row.email{ grid-template-columns:auto 1fr; }
+.info-twocol dt{ color:#9aa3af; font-size:.9rem; white-space:nowrap; }
+.info-twocol dd{
+  margin:0; font-weight:600; color:#e7e9ee;
+  overflow:hidden; text-overflow:ellipsis;
+}
+
+/* Keep numbers (ID, TotalXP) on one line; let email wrap */
+.nowrap{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.info-twocol .row.email dd{ white-space:normal; overflow-wrap:break-word; word-break:break-word; }
+
+/* SVG should scale on mobile; panels comfy on small screens */
+.panel-body svg{ max-width:100%; height:auto; display:block; margin-inline: auto; }
+@media (max-width:520px){
+  .info-twocol .row{ grid-template-columns:auto 1fr; }
+  .panel-body{ min-height:auto; padding:14px; }
+}
+
+/* === Shared list styles for Audits + Projects === */
+.list-grid{ display:grid; gap:8px; }
+
+/* dark card like your audits */
+.list-card{
+  border:1px solid #374151;
+  border-radius:12px;
+  padding:8px 12px;
+  background:#1f2937; /* dark gray */
+}
+
+/* row layout */
+.list-row{ display:flex; align-items:center; gap:8px; }
+
+/* text colors to match your audits */
+.list-login{ font-weight:600; color:#f9fafb; }  /* strong, near-white */
+.list-sep{ color:#9ca3af; }                     /* separator dash */
+.list-project{ color:#d1d5db; }                 /* light gray text */
+
+/* right-aligned pill (status/date/etc.) */
+.pill{
+  margin-left:auto;
+  padding:2px 10px;
+  border-radius:9999px;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.2px;
+  border:1px solid transparent;
+}
+.pill-ok{
+  border-color:rgba(16,185,129,0.6);
+  background:rgba(16,185,129,0.25);
+  color:#34d399;
+}
+.pill-warn{
+  border-color:rgba(245,158,11,0.6);
+  background:rgba(245,158,11,0.25);
+  color:#d8ca0a;
+}
+.pill-neutral{
+  border-color:rgba(148,163,184,0.5);       /* slate-400-ish */
+  background:rgba(148,163,184,0.2);
+  color:#e5e7eb;
+}
+.list-card{ transition: transform .08s ease, box-shadow .2s ease, border-color .2s; }
+.list-card:hover{
+  transform: translateY(-1px);
+  border-color: rgba(255,94,0,.35);
+  box-shadow: 0 0 20px rgba(255,94,0,.12);
+}
+
+/* span full width on desktop (like before) */
+.span-3 { grid-column: auto; }
+@media (min-width:760px){ .span-3{ grid-column: span 2; } }
+@media (min-width:1100px){ .span-3{ grid-column: span 3; } }
+
+/* SVG chart body: taller and no dashed border */
+.chart-body-svg{
+  border: none;
+  min-height: 360px;
+  height: 460px;
+  display: block;
+  position: relative;
+}
+@media (min-width:1100px){
+  .chart-body-svg{ height: 520px; }
+}
+.chart-body-svg svg{
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+
+/* === Electric background layers (lightweight pick) === */
+.grid-bg{
+  position: fixed; inset: 0; z-index: -2;
+  background-image:
+    radial-gradient(circle at 25% 25%, transparent 2%, rgba(255,94,0,.03) 2%, rgba(255,94,0,.03) 3%, transparent 3%),
+    radial-gradient(circle at 75% 75%, transparent 2%, rgba(0,178,255,.03) 2%, rgba(0,178,255,.03) 3%, transparent 3%);
+  background-size: 80px 80px;
+  animation: grid-move 30s linear infinite;
+}
+@keyframes grid-move { to { transform: translate(80px,80px); } } /* from template */ /*  */
+
+.gradient-overlay{
+  position: fixed; inset: 0; z-index: -1;
+  background:
+    radial-gradient(circle at 20% 50%, rgba(255,94,0,.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(0,178,255,.15) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(0,0,0,.8) 0%, transparent 100%);
+  animation: gradient-shift 10s ease-in-out infinite;
+}
+@keyframes gradient-shift { 50% { transform: scale(1.1) rotate(180deg); } } /*  */
+
+.scanlines{
+  position: fixed; inset: 0; z-index: 2; pointer-events: none;
+  background: linear-gradient(transparent 50%, rgba(255,94,0,.01) 50%);
+  background-size: 100% 4px;
+  animation: scanlines 8s linear infinite;
+}
+@keyframes scanlines { to { transform: translateY(10px); } } /*  */
+
