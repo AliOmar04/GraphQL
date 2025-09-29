@@ -64,28 +64,33 @@ export default function ProfilePage() {
       <section className="panel" aria-labelledby="user-info-h">
         <h2 id="user-info-h" className="panel-title">User information</h2>
         <div className="panel-body">
-          <dl className="info-twocol">
-            <div className="row">
-              <dt>Name:</dt>
-              <dd>{[user.firstName, user.lastName].filter(Boolean).join(" ") || "—"}</dd>
+          <dl className="info-vertical">
+          <div className="row">
+            <dt>Name:</dt>
+            <dd title={[user.firstName, user.lastName].filter(Boolean).join(" ")}>
+              {[user.firstName, user.lastName].filter(Boolean).join(" ") || "—"}
+            </dd>
+          </div>
+          <div className="row">
+            <dt>Username:</dt>
+            <dd title={user.login || "—"}>{user.login || "—"}</dd>
+          </div>
+          <div className="row">
+            <dt>ID:</dt>
+            <dd title={String(user.id || "—")}>{user.id || "—"}</dd>
+          </div>
 
-              <dt>Username:</dt>
-              <dd>{user.login || "—"}</dd>
-            </div>
-
-            <div className="row">
-              <dt>ID:</dt>
-              <dd>{user.id || "—"}</dd>
-
-              <dt>TotalXP:</dt>
-              <dd>{(user.totalXP ?? 0).toLocaleString()}</dd>
-            </div>
-
-            <div className="row email">
-              <dt>Email:</dt>
-              <dd>{user.email || "—"}</dd>
-            </div>
-          </dl>
+          <div className="row">
+            <dt>TotalXP:</dt>
+            <dd title={String(user.totalXP ?? 0)}>
+              {(user.totalXP ?? 0).toLocaleString()}
+            </dd>
+          </div>
+          <div className="row email">
+            <dt>Email:</dt>
+            <dd>{user.email || "—"}</dd>
+          </div>
+        </dl>
         </div>
       </section>
 

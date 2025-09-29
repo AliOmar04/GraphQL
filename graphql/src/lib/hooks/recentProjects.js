@@ -56,8 +56,8 @@ export function RecentProjects({ limit = 5 }) {
         return (
           <li key={`${name}-${t.createdAt || i}`} className="list-card">
             <div className="list-row">
-              <span className="list-project">{name}</span>
-              <span className="pill pill-neutral">{date}</span>
+              <span className="list-project" title={name}>{name}</span>
+              <span className="pill pill-neutral" title={date}>{date}</span>
             </div>
           </li>
         );

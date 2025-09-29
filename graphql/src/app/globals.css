@@ -391,3 +391,86 @@ body {
 h1, h2, h3 {
   font-family: var(--font-orbitron), sans-serif;
 }
+
+/* Vertical info layout: label on its own line, value below with ellipsis */
+.info-vertical { 
+  display: grid; 
+  gap: 14px; 
+  width: 100%;
+}
+
+.info-vertical .row {
+  display: grid;
+  grid-template-columns: 1fr; /* stack */
+  gap: 6px;
+}
+
+.info-vertical dt {
+  color: #9aa3af;
+  font-size: .9rem;
+  white-space: nowrap;
+}
+
+.info-vertical dd {
+  margin: 0;
+  font-weight: 600;
+  color: #e7e9ee;
+  min-width: 0;                 /* critical in grid/flex to allow shrinking */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;           /* single-line ellipsis */
+}
+
+/* If you want email to wrap instead of ellipsis (often nicer for long emails) */
+.info-vertical .row.email dd {
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+@media (min-width: 760px){
+  .user-info dl { 
+    display: grid;
+  }
+  .user-info dl.info-twocol .row{
+    grid-template-columns: auto 1fr auto 1fr;
+  }
+  .user-info dl.info-twocol dd{
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+
+/* Cards & rows */
+.list-card { 
+  min-width: 0;               /* allow contents to shrink inside grid */
+}
+.list-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;               /* CRITICAL for flex children to ellipsize */
+}
+
+/* The text parts that can get long */
+.list-row .list-project,
+.list-row .list-login {
+  flex: 1 1 auto;             /* take remaining room, be shrinkable */
+  min-width: 0;               /* allows overflow to be hidden instead of causing x-scroll */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;        /* single-line ellipsis */
+}
+
+/* Things that should not shrink (separator & status/date pills) */
+.list-row .list-sep,
+.list-row .pill {
+  flex: 0 0 auto;             /* keep size, don't compress */
+}
+
+/* Optional: if you ever want long words to wrap instead (not ellipsis), use this:
+.list-row .list-project { white-space: normal; overflow-wrap: anywhere; }
+*/

@@ -64,9 +64,9 @@ export function RecentAudits({ userId, limit = 5 }) {
         return (
           <li key={a.id} className="list-card">
             <div className="list-row">
-              <span className="list-login">{login}</span>
+              <span className="list-login" title={login}>{login}</span>
               <span className="list-sep">–</span>
-              <span className="list-project">{project}</span>
+              <span className="list-project" title={project}>{project}</span>
 
               <span className={done ? "pill pill-ok" : "pill pill-warn"}>
                 {done ? "Done!" : "Pending"}
